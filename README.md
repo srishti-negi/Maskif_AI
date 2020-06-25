@@ -15,6 +15,3 @@ Use OpenCV to create a mask detection web app.
 ## Target Audience
 The web application is  aimed at helping organizations take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.
 
-## Dataset
-https://github.com/prajnasb/observations/tree/master/experiements/data
-
