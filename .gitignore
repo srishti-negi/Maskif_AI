@@ -4,5 +4,8 @@ main.log
 main.nav
 main.out
 main.snm
-
+*.toc
+*.out
+*.nav
+*.snm
 
