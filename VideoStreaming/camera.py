@@ -4,7 +4,7 @@ import cv2
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 eye_cascade = cv2.CascadeClassifier("haarcascade_eye.xml")
 mouth_cascade = cv2.CascadeClassifier("haarcascade_smile.xml")
-ds_factor = 0.6
+ds_factor = 0.7
 
 class VideoCamera(object):
     def __init__(self):
@@ -27,23 +27,25 @@ class VideoCamera(object):
 
             #resized_frame = cv2.resize(image, (256, 256))
             
-            face_frame = image[descaledY:descaledY + descaledH , descaledX:descaledX + descaledW]
+#            face_frame = image[y+y+h, x:x+w]
+            face_frame = image[descaledY:descaledY+descaledH, descaledX:descaledX+descaledW]
             
             resized_frame = cv2.resize(face_frame, (256, 256))
             gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)
            
-            no_of_eyes = len(eye_cascade.detectMultiScale(gray_frame, 1.05, 100))
-            no_of_mouths = len(mouth_cascade.detectMultiScale(gray_frame, 1.05, 200))
-
+            no_of_eyes = len(eye_cascade.detectMultiScale(gray_frame, 1.1, 2))
+            no_of_mouths = len(mouth_cascade.detectMultiScale(gray_frame, 1.9, 2))
+            print(no_of_eyes, no_of_mouths)
             wearing_mask = None
             if no_of_eyes >= 2 and no_of_mouths == 0:
                 wearing_mask = True
             elif no_of_eyes >= 2 and no_of_mouths >= 1:
                 wearing_mask = False
             
-            image = cv2.rectangle(image, (descaledX, descaledY), (descaledX+descaledW, descaledY+descaledH), (255, 0, 0), 3)
+            image = cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 3)
+            #image = cv2.rectangle(image, (descaledX, descaledY), (descaledX+descaledW, descaledY+descaledH), (255, 0, 0), 3)
             face_label = "Wearing mask: " + str(wearing_mask)
-            image = cv2.putText(image, face_label, (descaledX, descaledY - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.25, (255, 0, 0))
+            image = cv2.putText(image, face_label, (x, y - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.25, (255, 0, 0))
             break
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
