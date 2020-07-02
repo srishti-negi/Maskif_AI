@@ -63,7 +63,7 @@ class VideoCamera(object):
                 frame = cv2.circle(frame, eye_center, radius, (255, 0, 0 ), 4)
             #mouth rect
             for (ex,ey,ew,eh) in mouth:
-                frame = cv2.rectangle(frame,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+                frame = cv2.rectangle(frame,(x + ex,y + ey),(x + ex+ew,y + ey+eh),(0,255,0),2)
 
             no_of_eyes = len(eyes)
             no_of_mouths = len(mouth)
