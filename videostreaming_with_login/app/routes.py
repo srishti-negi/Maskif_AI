@@ -1,4 +1,4 @@
-from flask import render_template, Response, redirect, flash, request
+from flask import render_template, Response, redirect, flash, request, url_for
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.camera import VideoCamera
@@ -18,7 +18,7 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @app.route('/video_feed')
-@login_required
+#@login_required
 def video_feed():
     return Response(gen(VideoCamera()), mimetype = 'multipart/x-mixed-replace; boundary=frame')
 
@@ -44,7 +44,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
