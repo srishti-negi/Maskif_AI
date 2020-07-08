@@ -1,5 +1,6 @@
 \documentclass[14pt]{beamer}
-
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \title{MaskifAI}
 \subtitle{A mask detection web app}
@@ -20,15 +21,46 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Motivation behind project}
+   Matter
+\end{frame}
+
+\begin{frame}
     \frametitle{Overview}
     Our project aims to create a mask detection web application which can be used by organizations to ensure that everybody who enters the workspace wears a mask.
 \end{frame}
 
 \begin{frame}
-    \frametitle{Tech stack}
+\frametitle{Mask Detection}
+\begin {figure}
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=3.5 cm,height=2.5 cm]{a}
+\caption{First}
+\end{minipage}
+\pause[2]
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=3.5 cm,height=2.5 cm]{b}
+\caption{Second}
+\end{minipage}%
+\pause[3]%
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=3.5 cm,height=2.5 cm]{c}
+\caption{Third}
+\end{minipage}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tech Stack}
     \begin{enumerate}
         \item OpenCV
         \item Flask
+        \item SQLite
+        \item HTML
+        \item CSS
     \end{enumerate}
 \end{frame} 
 
@@ -36,9 +68,9 @@
     \frametitle{Description}
     At the entrance
     \begin{enumerate}
-        \item Installed in a system
+        \item The website would be running in a system at the entrance
 
-        \item Employees: log into the system to check mask
+        \item Employees: Log into the application to check if ze is wearing a mask properly
 
         \item Mask not detected: Manager notified
     \end{enumerate}
@@ -48,15 +80,9 @@
     \frametitle{Description}
     At employee's workspace
     \begin{enumerate}
-        \item Periodical sanitization notification to employee
+        \item Provides periodic sanitization notifications to employee
             
         \item General hygiene and precautions for Covid-19 information
-    \end{enumerate}
-    At manager's workspace
-    \begin{enumerate}
-        \item Data recorded in a userbase.
-        
-        \item Data accessible to manager.
     \end{enumerate}
 \end{frame}
 
@@ -81,10 +107,14 @@
     \begin{enumerate}
         \item Using pre-trained classifiers provided in OpenCV to implement mask detection
         \item Using Flask to create basic webpages
+        \item login
+        \item database
     \end{enumerate}
     Challenges:
     \begin{enumerate}
         \item The mask detection accuracy is not good enough.
+        \integrating data returned by mask detection script with the web application database
+        \web push nofication
     \end{enumerate}
 \end{frame}
 
