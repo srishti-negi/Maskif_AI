@@ -1,10 +1,10 @@
 import cv2
 import argparse
-
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 eye_cascade = cv2.CascadeClassifier("haarcascade_eye.xml")
-mouth_cascade = cv2.CascadeClassifier("haarcascade_smile.xml")
-ds_factor = 0.6
+mouth_cascade = cv2.CascadeClassifier("haarcascade_mcs_mouth.xml")
+nose_cascade = cv2.CascadeClassifier("haarcascade_mcs_nose.xml")
+ds_factor = 0.5
 
 class VideoCamera(object):
     def __init__(self):
@@ -27,6 +27,7 @@ class VideoCamera(object):
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         frame_gray = cv2.equalizeHist(frame_gray)
         faces = face_cascade.detectMultiScale(gray_frame, 1.3, 5)
+        wearing_mask = None
         for (x, y, w, h) in faces:
             """
             descaled_x = int(x/ds_factor)
@@ -57,6 +58,8 @@ class VideoCamera(object):
         
             eyes = eye_cascade.detectMultiScale(faceROI, 1.05, 100)
             mouth = mouth_cascade.detectMultiScale(faceROI, 1.05, 200)
+            nose = nose_cascade.detectMultiScale(faceROI, 1.3, 5)
+
             #eye circles
             for (x2,y2,w2,h2) in eyes:
                 eye_center = (x + x2 + w2//2, y + y2 + h2//2)
@@ -64,19 +67,30 @@ class VideoCamera(object):
                 frame = cv2.circle(frame, eye_center, radius, (255, 0, 0 ), 4)
             #mouth rect
             for (ex,ey,ew,eh) in mouth:
-                frame = cv2.rectangle(frame,(x + ex,y + ey),(x + ex+ew,y + ey+eh),(0,255,0),2)
+                frame = cv2.rectangle(frame,(x + ex,y + ey),(x + ex+ew,y + ey+eh),(0,0,255),3)
+
+            #nose
+            for (nx,ny,nw,nh) in nose:
+                frame =  cv2.rectangle(frame, (x + nx,y + ny), (x + nx+nw,y + ny+nh), (0,255,0), 3)
+                #break
+
+            #print(no_of_eyes, no_of_mouths)
 
             no_of_eyes = len(eyes)
             no_of_mouths = len(mouth)
-
-            print(no_of_eyes, no_of_mouths)
-
-            wearing_mask = None
-            if no_of_eyes >= 2 and no_of_mouths == 0:
+            no_of_noses = len(nose)
+            """
+            if no_of_eyes >= 1 and no_of_mouths == 0 and no_of_noses == 0:
                 wearing_mask = True
-            if no_of_eyes >= 2 and no_of_mouths >= 1:
+            if no_of_eyes >= 1 and (no_of_mouths >= 1 or no_of_noses >= 1):
                 wearing_mask = False
 
+            """
+            if no_of_noses == 0:
+                wearing_mask = True
+            else:
+                wearing_mask = False
+            
             if wearing_mask == True:
                 frame_color = (0, 255, 0)
             elif wearing_mask == False:
@@ -93,6 +107,8 @@ class VideoCamera(object):
             break
         ret, jpeg = cv2.imencode(".jpg", frame)
         return jpeg.tobytes()
+
+
      
 """
     def get_frame(self):
