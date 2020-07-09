@@ -21,8 +21,9 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Motivation behind project}
-   Matter
+    \frametitle{Where would you feel safer?}
+    \includegraphics[width=4.5 cm,height=3.5 cm]{office_mask}
+    \includegraphics[width=4.5 cm,height=3.5 cm]{no_office_mask}
 \end{frame}
 
 \begin{frame}
@@ -31,26 +32,26 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Mask Detection}
-\begin {figure}
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=3.5 cm,height=2.5 cm]{a}
-\caption{First}
-\end{minipage}
-\pause[2]
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=3.5 cm,height=2.5 cm]{b}
-\caption{Second}
-\end{minipage}%
-\pause[3]%
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=3.5 cm,height=2.5 cm]{c}
-\caption{Third}
-\end{minipage}
-\end{figure}
+    \frametitle{Mask Detection}
+    \begin {figure}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=3.5 cm,height=2.5 cm]{a}
+            \caption{First}
+        \end{minipage}
+        \pause[2]
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=3.5 cm,height=2.5 cm]{b}
+            \caption{Second}
+        \end{minipage}%
+        \pause[3]%
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=3.5 cm,height=2.5 cm]{c}
+            \caption{Third}
+        \end{minipage}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -95,9 +96,9 @@
     \frametitle{Status}
     \begin{enumerate}
         \item Implemented mask detection in local system
-        \item Working on improving mask detection accuracy
-        \item Made a basic web app using Flask having a single webpage for mask detection
-        \item Working on the login and notification features for the web app
+        \item Improved mask detection accuracy
+        \item Made a web app - login and mask detction
+        \item Working on the notification feature
     \end{enumerate}
 \end{frame}
 
@@ -105,16 +106,18 @@
     \frametitle{Learnings and Challenges}
     Learnings:
     \begin{enumerate}
-        \item Using pre-trained classifiers provided in OpenCV to implement mask detection
-        \item Using Flask to create basic webpages
-        \item login
-        \item database
+        \item Using pre-trained classifiers to implement feature detection
+        \item How to use Flask extensions to implement-
+        \begin{enumerate}
+            \item Login feature
+            \item Database
+            \item Store encrypted data using werkzeug.security
+        \end{enumerate}
     \end{enumerate}
     Challenges:
     \begin{enumerate}
-        \item The mask detection accuracy is not good enough.
-        \integrating data returned by mask detection script with the web application database
-        \web push nofication
+        \item Integration of mask detection script with database
+        \item Web push nofication
     \end{enumerate}
 \end{frame}
 
@@ -123,7 +126,7 @@
     \begin{enumerate}
         \item OpenCV documentation: https://opencv.org/
         \item Flask documentation: https://flask.palletsprojects.com/en/1.1.x/
-        \item Existing mask-detection project: https://github.com/jyjblrd/MaskVi
+        \item A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework: https://link.springer.com/article/10.1007/s00138-010-0250-7
     \end{enumerate}
 \end{frame}
 
