@@ -1,8 +1,8 @@
 import cv2
 import argparse
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
-eye_cascade = cv2.CascadeClassifier("haarcascade_eye.xml")
-mouth_cascade = cv2.CascadeClassifier("haarcascade_mcs_mouth.xml")
+#eye_cascade = cv2.CascadeClassifier("haarcascade_eye.xml")
+#mouth_cascade = cv2.CascadeClassifier("haarcascade_mcs_mouth.xml")
 nose_cascade = cv2.CascadeClassifier("haarcascade_mcs_nose.xml")
 ds_factor = 0.5
 
@@ -56,10 +56,10 @@ class VideoCamera(object):
             roi_eye = frame[y-(int(h/2)):y+h, x:x+w]
             """
         
-            eyes = eye_cascade.detectMultiScale(faceROI, 1.05, 100)
-            mouth = mouth_cascade.detectMultiScale(faceROI, 1.05, 200)
+            #eyes = eye_cascade.detectMultiScale(faceROI, 1.05, 100)
+            #mouth = mouth_cascade.detectMultiScale(faceROI, 1.05, 200)
             nose = nose_cascade.detectMultiScale(faceROI, 1.3, 5)
-
+            """
             #eye circles
             for (x2,y2,w2,h2) in eyes:
                 eye_center = (x + x2 + w2//2, y + y2 + h2//2)
@@ -68,7 +68,7 @@ class VideoCamera(object):
             #mouth rect
             for (ex,ey,ew,eh) in mouth:
                 frame = cv2.rectangle(frame,(x + ex,y + ey),(x + ex+ew,y + ey+eh),(0,0,255),3)
-
+            """
             #nose
             for (nx,ny,nw,nh) in nose:
                 frame =  cv2.rectangle(frame, (x + nx,y + ny), (x + nx+nw,y + ny+nh), (0,255,0), 3)
@@ -76,8 +76,8 @@ class VideoCamera(object):
 
             #print(no_of_eyes, no_of_mouths)
 
-            no_of_eyes = len(eyes)
-            no_of_mouths = len(mouth)
+            #no_of_eyes = len(eyes)
+            #no_of_mouths = len(mouth)
             no_of_noses = len(nose)
             """
             if no_of_eyes >= 1 and no_of_mouths == 0 and no_of_noses == 0:
@@ -106,7 +106,7 @@ class VideoCamera(object):
             frame = cv2.putText(frame, face_label, (x - w, y), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.2, (255, 0, 0) )
             break
         ret, jpeg = cv2.imencode(".jpg", frame)
-        return jpeg.tobytes()
+        return jpeg.tobytes(), wearing_mask
 
 
      
