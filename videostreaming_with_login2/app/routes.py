@@ -48,6 +48,12 @@ def success():
     db.session.commit()
     return render_template('success.html')
 
+@app.route('/check')
+@login_required
+def check():
+    #print(maskTF)
+    return render_template('maskdetection.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:

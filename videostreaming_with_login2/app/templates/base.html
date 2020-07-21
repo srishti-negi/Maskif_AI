@@ -7,10 +7,14 @@
         {% endif %}
     </head>
     <body>
+        <h1>MaskifAI</h1>
+        <nav>
         <a href="{{url_for('index')}}">Home</a>
         <a href="{{url_for('login')}}">Login</a>
         <a href="{{url_for('logout')}}">Logout</a>
-        <a href="{{url_for('video_feed')}}">Mask Detector</a>
+        <a href="{{url_for('check')}}">Mask Detector</a>
+        <!--<a href="{{url_for('video_feed')}}">Mask Detector</a>-->
+        </nav>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
