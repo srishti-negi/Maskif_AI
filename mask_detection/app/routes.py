@@ -6,25 +6,20 @@ from app.models import User
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import time
+from datetime import datetime
 
 @app.route('/') 
 @app.route('/index')
 def index():
     return render_template('index.html')
 
-#@app.route('/success')
-#@login_required
-#def success():
-#    #print(maskTF)
-#    current_user.wearing_mask = maskTF 
-#    db.session.commit()
-#    return render_template('success.html')
-
 @login_required
 def gen(camera):
     curr_time = time.time()
     while time.time() < curr_time + 5:
         frame, wearmask = camera.get_frame()
+        global curr_datetime
+        curr_datetime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         global maskTF 
         maskTF = wearmask
         print(maskTF)
@@ -34,10 +29,6 @@ def gen(camera):
 @app.route('/video_feed')
 @login_required
 def video_feed():
-#    user = User.query.filter_by(id=current_user.get_id).first()
-#    user.wearing_mask = False
-#    db.session.add(user)
-#    db.session.commit()
     return Response(gen(VideoCamera()), mimetype = 'multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/success')
@@ -45,6 +36,7 @@ def video_feed():
 def success():
     #print(maskTF)
     current_user.wearing_mask = maskTF 
+    current_user.date_time = curr_datetime
     db.session.commit()
     return render_template('success.html')
 
