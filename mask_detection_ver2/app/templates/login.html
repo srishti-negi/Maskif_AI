@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> Sign In </h1>
-
+<center>
+<h1 style="color: #fff"> Sign In </h1>
+<div style="color: #fff">
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
@@ -28,4 +29,6 @@
     </p>
 </form>
 <p> New user? <a href="{{url_for('register')}}">Register here</a> </p>
+</div>
+</center>
 {% endblock %}

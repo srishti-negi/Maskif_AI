@@ -52,9 +52,6 @@
                     </a>
                 </li>
                 <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('about')}}">About</a>
-                </li>
-                <li class="nav-item px-lg-4">
                     <a class="nav-link text-uppercase text-expanded" href="{{url_for('covid_info')}}">Covid Precautions</a>
                 </li>
                 <li class="nav-item px-lg-4">
@@ -64,7 +61,10 @@
                     <a class="nav-link text-uppercase text-expanded" href="{{url_for('logout')}}">Logout</a>
                 </li>
                 <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('check')}}">Mask detector</a>
+                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('check')}}">Mask Detector</a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('about')}}">About</a>
                 </li>
                 </ul>
             </div>
@@ -74,7 +74,7 @@
         {% if messages %}
         <ul>
             {% for message in messages %}
-            <li> {{ message }} </li>
+            <li style="color: #fff"> {{ message }} </li>
             {% endfor %}
         </ul>
         {% endif %}
