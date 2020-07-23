@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="page-section about-heading">
+    <div class="container">
+      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{{url_for('static', filename='group.jpeg')}}" style = "height: 500px;"alt="">
+      <div class="about-heading-content">
+        <div class="row">
+          <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+              <h2 class="section-heading mb-4">
+                <span class="section-heading-upper">About us</span>
+                <span class="section-heading-lower"><i>Sachita Malhotra, Srishti Negi, Shruthi Rao</i></span>
+              </h2>
+              <p> <h1 class="site-heading text-center text-white d-none d-lg-block"></h1>
+    
+    
+              We are first year students from Indira Gandhi Delhi Technical University for Women. <br>Together we have created MaskifAI, a mask detection web application which aims to help organizations take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.</p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer text-faded text-center py-5">
+    <div class="container">
+      <p class="m-0 small">Copyright &copy; MaskifAI 2020</p>
+      <p class="m-0 small">Made by <a href = "https://linkedin.com/in/sachitamalhotra">S</a><a href = "https://linkedin.com/in/srishti-negi-83a10019b">S</a><a href = "https://linkedin.com/in/shruthi-rao-709849196/">S</a></p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
