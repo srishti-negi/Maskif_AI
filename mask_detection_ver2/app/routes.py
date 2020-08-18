@@ -1,5 +1,5 @@
 from flask import render_template, Response, redirect, flash, request, url_for
-from app import app, db
+from app import app, db, mail
 from app.forms import LoginForm, RegistrationForm
 from app.camera import VideoCamera
 from app.models import User
@@ -7,6 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import time
 from datetime import datetime
+from flask_mail import Message
 
 @app.route('/') 
 
@@ -90,6 +91,13 @@ def register():
         flash('You are registered!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/sendmail')
+def sendmail():
+    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['raoshruthi2001@gmail.com', 'srishtinegi925@gmail.com', 'malhotra.sachita3@gmail.com'])
+    msg.body = 'Testing phase. Hey there!'
+    mail.send(msg)
+    return "Sent"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
