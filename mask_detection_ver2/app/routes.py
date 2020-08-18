@@ -8,6 +8,7 @@ from werkzeug.urls import url_parse
 import time
 from datetime import datetime
 from flask_mail import Message
+import sqlite3
 
 @app.route('/') 
 
@@ -94,9 +95,20 @@ def register():
 
 @app.route('/sendmail')
 def sendmail():
+    conn = sqlite3.connect('app/app.db')
+    cursor = conn.cursor()
+    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
+    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    cursor.execute(query, (current_date,))
+    rows = cursor.fetchall()
+    defaulters = []
+    for i in rows:
+        defaulters.append('                 '.join(str(j) for j in i))
     msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['raoshruthi2001@gmail.com', 'srishtinegi925@gmail.com', 'malhotra.sachita3@gmail.com'])
-    msg.body = 'Testing phase. Hey there!'
+    msg.body = 'Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
     mail.send(msg)
+    conn.commit()
+    conn.close()
     return "Sent"
 
 if __name__ == '__main__':
