@@ -9,6 +9,9 @@ import time
 from datetime import datetime
 from flask_mail import Message
 import sqlite3
+import smtplib, ssl
+from email.message import EmailMessage
+
 
 @app.route('/') 
 
@@ -25,7 +28,7 @@ def gen(camera):
         curr_datetime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         global maskTF 
         maskTF = wearmask
-        print(maskTF)
+        #print(maskTF)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -93,7 +96,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/sendmail')
+#@app.route('/sendmail')
 def sendmail():
     conn = sqlite3.connect('app/app.db')
     cursor = conn.cursor()
@@ -104,12 +107,58 @@ def sendmail():
     defaulters = []
     for i in rows:
         defaulters.append('                 '.join(str(j) for j in i))
-    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['raoshruthi2001@gmail.com', 'srishtinegi925@gmail.com', 'malhotra.sachita3@gmail.com'])
+    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com'])
     msg.body = 'Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
     mail.send(msg)
     conn.commit()
     conn.close()
     return "Sent"
+
+###############################################################################
+
+def send_mail_without_flask():
+        
+    conn = sqlite3.connect('app/app.db')
+    cursor = conn.cursor()
+    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
+    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    cursor.execute(query, (current_date,))
+    rows = cursor.fetchall()
+    defaulters = []
+    for i in rows:
+        defaulters.append('                 '.join(str(j) for j in i))
+    msg = '\n Subject: AUTOMATED MAIL! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
+    conn.commit()
+    conn.close()
+
+    port = 587  # For starttls
+    smtp_server = "smtp.gmail.com"
+    sender_email = "maskifai@gmail.com"
+    
+    receiver_email = ['srishtinegi925@gmail.com', 'raoshruthi2001@gmail.com',  'malhotra.sachita3@gmail.com']
+    password = "sss@wtef2020"
+    message = """\
+    Subject: Hi there
+
+    This message is sent from Python."""
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        for receiver in receiver_email:
+            server.sendmail(sender_email, receiver, msg)
+            print("sent to", receiver)
+
+##########################################################################################
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+if current_time[0] == '2':
+    s = send_mail_without_flask()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
