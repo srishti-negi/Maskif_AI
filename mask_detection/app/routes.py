@@ -1,5 +1,5 @@
 from flask import render_template, Response, redirect, flash, request, url_for
-from app import app, db
+from app import app, db, mail
 from app.forms import LoginForm, RegistrationForm
 from app.camera import VideoCamera
 from app.models import User
@@ -7,12 +7,18 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import time
 from datetime import datetime
+from flask_mail import Message
+import sqlite3
+import smtplib, ssl
+from email.message import EmailMessage
+
 
 @app.route('/') 
+
 @app.route('/index')
 def index():
     return render_template('index.html')
-
+   
 @login_required
 def gen(camera):
     curr_time = time.time()
@@ -22,7 +28,7 @@ def gen(camera):
         curr_datetime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         global maskTF 
         maskTF = wearmask
-        print(maskTF)
+        #print(maskTF)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -68,6 +74,14 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/covid_info')
+def covid_info():
+    return render_template('products.html')
+ 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -81,6 +95,73 @@ def register():
         flash('You are registered!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+app.route('/sendmail')
+def sendmail():
+    conn = sqlite3.connect('app/app.db')
+    cursor = conn.cursor()
+    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
+    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    cursor.execute(query, (current_date,))
+    rows = cursor.fetchall()
+    defaulters = []
+    for i in rows:
+        defaulters.append('                 '.join(str(j) for j in i))
+    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['raoshruthi2001@gmail.com','srishtinegi925@gmail.com'])
+    msg.body = 'Subject: Hi there \n Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
+    with app.app_context():
+        print("mail.send(msg)")
+        mail.send(msg)
+    conn.commit()
+    conn.close()
+    return "Sent"
+
+###############################################################################
+
+def send_mail_without_flask():
+        
+    conn = sqlite3.connect('app/app.db')
+    cursor = conn.cursor()
+    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
+    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    cursor.execute(query, (current_date,))
+    rows = cursor.fetchall()
+    defaulters = []
+    for i in rows:
+        defaulters.append('                 '.join(str(j) for j in i))
+    conn.commit()
+    conn.close()
+
+    port = 587  # For starttls
+    smtp_server = "smtp.gmail.com"
+    sender_email = "maskifai@gmail.com"
+    
+    receiver_email = ['srishtinegi249@gmail.com']
+    password = "sss@wtef2020"
+    msg = """Subject: AUTOMATED MAIL
+             \nBody: 
+             \nHere are the employees who did not wear a mask today.
+             \nID  Username\n""" + """      """.join(i for i in defaulters)
+    #msg = " J".join(i for i in defaulters)
+    print ( defaulters)
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        for receiver in receiver_email:
+            server.sendmail(sender_email, receiver, msg)
+            print("sent to", receiver)
+
+##########################################################################################
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+if current_time[0] == '1':
+    print("if cond met")
+    s = sendmail()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

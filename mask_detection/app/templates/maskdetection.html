@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<h1> Mask Detector </h1>
+<center>
+<h1 style="color: #fff"> Mask Detector </h1>
 <img id = "bg" src="{{ url_for('video_feed') }}" alt="User Image">
 <br>
-<a href="{{url_for('success') }}">Submit here</a>
+<a style="color: #fff" href="{{url_for('success') }}">Submit here</a>
+</center>
 {% endblock %}
