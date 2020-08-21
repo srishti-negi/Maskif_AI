@@ -80,7 +80,7 @@ def about():
 
 @app.route('/covid_info')
 def covid_info():
-    return render_template('products.html')
+    return render_template('precaution.html')
  
 @app.route('/register', methods=['GET', 'POST'])
 def register():
