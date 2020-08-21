@@ -108,7 +108,7 @@ def sendmail():
     for i in rows:
         defaulters.append('                 '.join(str(j) for j in i))
     msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com'])
-    msg.body = 'Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
+    msg.body = 'Subject: Hi there \n Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
     mail.send(msg)
     conn.commit()
     conn.close()
@@ -127,7 +127,6 @@ def send_mail_without_flask():
     defaulters = []
     for i in rows:
         defaulters.append('                 '.join(str(j) for j in i))
-    msg = '\n Subject: AUTOMATED MAIL! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
     conn.commit()
     conn.close()
 
@@ -135,13 +134,14 @@ def send_mail_without_flask():
     smtp_server = "smtp.gmail.com"
     sender_email = "maskifai@gmail.com"
     
-    receiver_email = ['srishtinegi925@gmail.com', 'raoshruthi2001@gmail.com',  'malhotra.sachita3@gmail.com']
+    receiver_email = ['srishtinegi249@gmail.com']
     password = "sss@wtef2020"
-    message = """\
-    Subject: Hi there
-
-    This message is sent from Python."""
-
+    msg = """Subject: AUTOMATED MAIL
+             \nBody: 
+             \nHere are the employees who did not wear a mask today.
+             \nID  Username\n""" + """      """.join(i for i in defaulters)
+    #msg = " J".join(i for i in defaulters)
+    print ( defaulters)
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
@@ -157,7 +157,7 @@ def send_mail_without_flask():
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
-if current_time[0] == '2':
+if current_time[0] == '1':
     s = send_mail_without_flask()
 
 if __name__ == '__main__':
