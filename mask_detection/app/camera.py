@@ -1,6 +1,5 @@
 import cv2
 
-#cascade files for feature detection
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 nose_cascade = cv2.CascadeClassifier("haarcascade_mcs_nose.xml")
 #for reducing frame size
@@ -31,9 +30,6 @@ class VideoCamera(object):
             gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)
             #detect nose position
             nose = nose_cascade.detectMultiScale(face_frame, 1.3, 5)
-            #frame nose location
-            for (nx,ny,nw,nh) in nose:
-                frame =  cv2.rectangle(frame, (x + nx,y + ny), (x + nx+nw,y + ny+nh), (0,255,0), 3)
     
             no_of_noses = len(nose)
             if no_of_noses == 0:
