@@ -112,45 +112,5 @@ def sendmail():
     conn.close()
     return redirect(url_for('index'))
 
-def send_mail_without_flask():
-    conn = sqlite3.connect('app/app.db')
-    cursor = conn.cursor()
-    current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')[:10] + '%'
-    query = 'select id, username from user where wearing_mask = 0 and date_time like ?'
-    cursor.execute(query, (current_date,))
-    rows = cursor.fetchall()
-    defaulters = []
-    for i in rows:
-        defaulters.append('                 '.join(str(j) for j in i))
-    conn.commit()
-    conn.close()
-    port = 587  # For starttls
-    smtp_server = 'smtp.gmail.co'
-    sender_email = 'maskifai@gmail.com'
-    receiver_email = ['srishtinegi249@gmail.com', 'raoshruthi2001@gmail.com', 'sachy01pm@gmail.com']
-    password = 'sss@wtef2020'
-    msg = """Subject: AUTOMATED MAIL
-             \nBody: 
-             \nHere are the employees who did not wear a mask today.
-             \nID  Username\n""" + """          
-                   """.join(i for i in defaulters)
-    context = ssl.create_default_context()
-    with smtplib.SMTP(smtp_server, port) as server:
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)
-        server.ehlo()  # Can be omitted
-        server.login(sender_email, password)
-        for receiver in receiver_email:
-            server.sendmail(sender_email, receiver, msg)
-
-##########################################################################################
-
-# now = datetime.now()
-
-# current_time = now.strftime("%H:%M:%S")
-# if current_time[0] == '1':
-#     print("if cond met")
-#     s = sendmail()
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
