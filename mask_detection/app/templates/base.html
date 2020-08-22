@@ -64,12 +64,15 @@
                 <li class="nav-item px-lg-4">
                     <a class="nav-link text-uppercase text-expanded" href="{{url_for('covid_info')}}">Covid Precautions</a>
                 </li>
-                <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('login')}}">Login</a>
-                </li>
+                {% if current_user.is_authenticated %}
                 <li class="nav-item px-lg-4">
                     <a class="nav-link text-uppercase text-expanded" href="{{url_for('logout')}}">Logout</a>
                 </li>
+                {% else %}
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="{{url_for('login')}}">Login</a>
+                </li>
+                {% endif %}
                 <li class="nav-item px-lg-4">
                     <a class="nav-link text-uppercase text-expanded" href="{{url_for('check')}}">Mask Detector</a>
                 </li>
