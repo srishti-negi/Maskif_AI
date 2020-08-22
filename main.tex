@@ -33,25 +33,7 @@
 
 \begin{frame}
     \frametitle{Mask Detection}
-    \begin {figure}
-        \begin{minipage}{0.5\textwidth}
-            \centering
-            \includegraphics[width=2.5 cm,height=1.5 cm]{a}
-            \caption{Not wearing mask}
-        \end{minipage}
-        \pause[2]
-        \begin{minipage}{0.5\textwidth}
-            \centering
-            \includegraphics[width=2.5 cm,height=1.5 cm]{b}
-            \caption{Wearing mask}
-        \end{minipage}%
-        \pause[3]%
-        \begin{minipage}{0.5\textwidth}
-            \centering
-            \includegraphics[width=2.5 cm,height=1.5 cm]{c}
-            \caption{Wearing mask improperly}
-        \end{minipage}
-    \end{figure}
+    
 \end{frame}
 
 \begin{frame}
@@ -67,24 +49,16 @@
 
 \begin{frame}
     \frametitle{Description}
-    At the entrance
     \begin{enumerate}
 
         \item Employees: Log into the application to check if ze is wearing a mask properly
 
         \item Mask not detected: Manager notified
-    \end{enumerate}
-\end{frame}
 
-\begin{frame}
-    \frametitle{Description}
-    At employee's workspace
-    \begin{enumerate}
-        \item Provides periodic sanitization notifications to employee
-            
         \item General hygiene and precautions for Covid-19 information
     \end{enumerate}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Target Audience}
@@ -92,7 +66,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Status}
+    \frametitle{Statistics}
     \begin{enumerate}
         \item Implemented mask detection in local system
         \item Improved mask detection accuracy
@@ -106,19 +80,33 @@
     \frametitle{Learnings}
     \begin{enumerate}
         \item Using pre-trained classifiers to implement feature detection
-        \item How to implement-
+        \item Working with Flask for web development
+        \item Implementing-
         \begin{enumerate}
-            \item Login feature
+            \item Login 
             \item Database
-            \item Store encrypted data using werkzeug.security
+            \item Store encrypted passwords
         \end{enumerate}
+        \item Version control
     \end{enumerate}
 \end{frame}
+
 \begin{frame}
     \frametitle{Challenges}
     \begin{enumerate}
-        \item Web push notification
-        \item Database access for manager
+        \item Mask Detection Accuracy
+        \item Database Integration
+        \item Email Notification 
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Future Scope}
+    \begin{enumerate}
+        \item Deployment + Web Push notifications
+        \item Improve accuracy through Deep Learning
+        \item Detect industry-specific protective gear
     \end{enumerate}
 \end{frame}
 
@@ -132,6 +120,10 @@
         \item A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework: 
         https://link.springer.com/article/10.1007/s00138-010-0250-7
     \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    DEMO
 \end{frame}
 
 \end{document}
