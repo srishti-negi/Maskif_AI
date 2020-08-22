@@ -17,6 +17,7 @@ from email.message import EmailMessage
 
 @app.route('/index')
 def index():
+    automate_mail()
     return render_template('index.html')
    
 @login_required
@@ -40,6 +41,7 @@ def video_feed():
 @app.route('/success')
 @login_required
 def success():
+    automate_mail()
     #print(maskTF)
     current_user.wearing_mask = maskTF 
     current_user.date_time = curr_datetime
@@ -49,11 +51,13 @@ def success():
 @app.route('/check')
 @login_required
 def check():
+    automate_mail()
     #print(maskTF)
     return render_template('maskdetection.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    automate_mail()
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
@@ -76,14 +80,17 @@ def logout():
 
 @app.route('/about')
 def about():
+    automate_mail()
     return render_template('about.html')
 
 @app.route('/covid_info')
 def covid_info():
+    automate_mail()
     return render_template('precaution.html')
  
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    automate_mail()
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
@@ -96,7 +103,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/sendmail')
+app.route('/sendmail')
 def sendmail():
     conn = sqlite3.connect('app/app.db')
     cursor = conn.cursor()
@@ -107,14 +114,14 @@ def sendmail():
     defaulters = []
     for i in rows:
         defaulters.append('                 '.join(str(j) for j in i))
-    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com'])  #'raoshruthi2001@gmail.com',
+    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com']) #'raoshruthi2001@gmail.com',
     msg.body = 'Subject: Hi there \n Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
     with app.app_context():
         print("mail.send(msg)")
         mail.send(msg)
     conn.commit()
     conn.close()
-    return redirect(url_for('index'))
+    return "Sent"
 
 ###############################################################################
 
@@ -141,8 +148,7 @@ def send_mail_without_flask():
     msg = """Subject: AUTOMATED MAIL
              \nBody: 
              \nHere are the employees who did not wear a mask today.
-             \nID  Username\n""" + """          
-                   """.join(i for i in defaulters)
+             \nID  Username\n""" + """      """.join(i for i in defaulters)
     #msg = " J".join(i for i in defaulters)
     print ( defaulters)
     context = ssl.create_default_context()
@@ -157,12 +163,13 @@ def send_mail_without_flask():
 
 ##########################################################################################
 
-# now = datetime.now()
+def automate_mail():
+    now = datetime.now()
 
-# current_time = now.strftime("%H:%M:%S")
-# if current_time[0] == '1':
-#     print("if cond met")
-#     s = sendmail()
+    current_time = now.strftime("%H:%M:%S")
+    if current_time[0] == '1':
+        print("if cond met")
+        s = sendmail()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

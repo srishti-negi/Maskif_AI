@@ -22,7 +22,17 @@
 
         <!-- Custom styles for this template -->
         <link href="{{ url_for('static', filename='css/business-casual.min.css') }}" rel="stylesheet">
-   
+
+        <style>
+            #fixedbutton {
+                width: 10%;
+                position: fixed;
+                bottom: 10px;
+                right: 10px; 
+                
+            }
+
+        </style>
         {% if title %}
         <title> MaskifAI -- {{ title }} </title>
         {% else %}
@@ -80,5 +90,13 @@
         {% endif %}
         {% endwith %}
         {% block content %} {% endblock %}
+    <a href="{{url_for('sendmail')}}"><img src="static/img/mail.png" width="10%" id="fixedbutton"></a>
+    
+  <footer class="footer text-faded text-center py-5">
+    <div class="container">
+      <p class="m-0 small">Copyright &copy; MaskifAI 2020</p>
+      <p class="m-0 small">Made by <a href = "https://linkedin.com/in/sachitamalhotra">S</a><a href = "https://linkedin.com/in/srishti-negi-83a10019b">S</a><a href = "https://linkedin.com/in/shruthi-rao-709849196/">S</a></p>
+    </div>
+  </footer>  
     </body>
 </html>
