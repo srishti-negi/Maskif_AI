@@ -14,7 +14,6 @@ from email.message import EmailMessage
 
 
 @app.route('/') 
-
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -28,7 +27,6 @@ def gen(camera):
         curr_datetime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         global maskTF 
         maskTF = wearmask
-        #print(maskTF)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -40,7 +38,6 @@ def video_feed():
 @app.route('/success')
 @login_required
 def success():
-    #print(maskTF)
     current_user.wearing_mask = maskTF 
     current_user.date_time = curr_datetime
     db.session.commit()
@@ -49,7 +46,6 @@ def success():
 @app.route('/check')
 @login_required
 def check():
-    #print(maskTF)
     return render_template('maskdetection.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -100,30 +96,27 @@ def register():
 def sendmail():
     conn = sqlite3.connect('app/app.db')
     cursor = conn.cursor()
-    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
-    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')[:10] + '%'
+    query = 'select id, username from user where wearing_mask = 0 and date_time like ?'
     cursor.execute(query, (current_date,))
     rows = cursor.fetchall()
     defaulters = []
+    SPACE = '                         ' 
     for i in rows:
-        defaulters.append('                 '.join(str(j) for j in i))
-    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com'])  #'raoshruthi2001@gmail.com',
-    msg.body = 'Subject: Hi there \n Greetings from MaskifAI! \n Here are the employees who did not wear a mask today: \n Employee_ID      Username\n' + '\n'.join(i for i in defaulters)
+        defaulters.append(SPACE.join(str(j) for j in i))
+    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com', 'raoshruthi2001@gmail.com', 'sachy01pm@gmail.com'])
+    msg.body = 'Greetings from MaskifAI! \nHere are the employees who did not wear a mask today: \nEmployee_ID      Username\n' + '\n'.join(i for i in defaulters)
     with app.app_context():
-        print("mail.send(msg)")
         mail.send(msg)
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
 
-###############################################################################
-
 def send_mail_without_flask():
-        
     conn = sqlite3.connect('app/app.db')
     cursor = conn.cursor()
-    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")[:10] + "%"
-    query = "select id, username from user where wearing_mask = 0 and date_time like ?"
+    current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')[:10] + '%'
+    query = 'select id, username from user where wearing_mask = 0 and date_time like ?'
     cursor.execute(query, (current_date,))
     rows = cursor.fetchall()
     defaulters = []
@@ -131,20 +124,16 @@ def send_mail_without_flask():
         defaulters.append('                 '.join(str(j) for j in i))
     conn.commit()
     conn.close()
-
     port = 587  # For starttls
-    smtp_server = "smtp.gmail.com"
-    sender_email = "maskifai@gmail.com"
-    
-    receiver_email = ['srishtinegi249@gmail.com']
-    password = "sss@wtef2020"
+    smtp_server = 'smtp.gmail.co'
+    sender_email = 'maskifai@gmail.com'
+    receiver_email = ['srishtinegi249@gmail.com', 'raoshruthi2001@gmail.com', 'sachy01pm@gmail.com']
+    password = 'sss@wtef2020'
     msg = """Subject: AUTOMATED MAIL
              \nBody: 
              \nHere are the employees who did not wear a mask today.
              \nID  Username\n""" + """          
                    """.join(i for i in defaulters)
-    #msg = " J".join(i for i in defaulters)
-    print ( defaulters)
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
@@ -153,7 +142,6 @@ def send_mail_without_flask():
         server.login(sender_email, password)
         for receiver in receiver_email:
             server.sendmail(sender_email, receiver, msg)
-            print("sent to", receiver)
 
 ##########################################################################################
 
