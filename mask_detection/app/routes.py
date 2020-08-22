@@ -94,22 +94,25 @@ def register():
 
 @app.route('/sendmail')
 def sendmail():
-    conn = sqlite3.connect('app/app.db')
-    cursor = conn.cursor()
-    current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')[:10] + '%'
-    query = 'select id, username from user where wearing_mask = 0 and date_time like ?'
-    cursor.execute(query, (current_date,))
-    rows = cursor.fetchall()
-    defaulters = []
-    SPACE = '                         ' 
-    for i in rows:
-        defaulters.append(SPACE.join(str(j) for j in i))
-    msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com', 'raoshruthi2001@gmail.com', 'sachy01pm@gmail.com'])
-    msg.body = 'Greetings from MaskifAI! \nHere are the employees who did not wear a mask today: \nEmployee_ID      Username\n' + '\n'.join(i for i in defaulters)
-    with app.app_context():
-        mail.send(msg)
-    conn.commit()
-    conn.close()
+    if current_user.id == 1:
+        conn = sqlite3.connect('app/app.db')
+        cursor = conn.cursor()
+        current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')[:10] + '%'
+        query = 'select id, username from user where wearing_mask = 0 and date_time like ?'
+        cursor.execute(query, (current_date,))
+        rows = cursor.fetchall()
+        defaulters = []
+        SPACE = '                         ' 
+        for i in rows:
+            defaulters.append(SPACE.join(str(j) for j in i))
+        msg = Message('Alert from MaskifAI', sender = 'maskifai@gmail.com', recipients = ['srishtinegi925@gmail.com', 'raoshruthi2001@gmail.com', 'sachy01pm@gmail.com'])
+        msg.body = 'Greetings from MaskifAI! \nHere are the employees who did not wear a mask today: \nEmployee_ID      Username\n' + '\n'.join(i for i in defaulters)
+        with app.app_context():
+            mail.send(msg)
+        conn.commit()
+        conn.close()
+    else:
+        flash('You are not authorised to send mail.')
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
