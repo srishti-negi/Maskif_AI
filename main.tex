@@ -1,6 +1,7 @@
 \documentclass[14pt]{beamer}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{xcolor}
 \graphicspath{ {./images/} }
 
 \title{MaskifAI}
@@ -35,22 +36,36 @@
 
 \begin{frame}
     \frametitle{Mask Detection}
-    \includegraphics[scale=0.2]{mask_true}
+    \begin{figure}
+    \caption{Wearing mask properly}
+    \centering
+    \includegraphics[width=0.85\textwidth]{mask_true}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Mask Detection}
-    \includegraphics[scale=0.3]{improper_mask}
+    \begin{figure}
+    \caption{Wearing mask improperly}
+    \centering
+    \includegraphics[width=0.8\textwidth]{improper_mask}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Mask Detection}
-    \includegraphics[scale=0.3]{no_mask}
+    \frametitle{Mask Detection}
+    \begin{figure}
+    \caption{Not Wearing mask}
+    \centering
+    \includegraphics[width=0.8\textwidth]{no_mask}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Tech Stack}
     \begin{enumerate}
+        \item Python
         \item OpenCV
         \item Flask
         \item SQLite
@@ -62,10 +77,11 @@
 \begin{frame}
     \frametitle{Description}
     \begin{enumerate}
+        \item App connected to company's authorization system
 
-        \item Employees: Log into the application to check if ze is wearing a mask properly
+        \item Employees: Verify if ze is wearing a mask properly
 
-        \item Mask not detected: Manager notified
+        \item Mask not detected: Admin notified
 
         \item General hygiene and precautions for Covid-19
     \end{enumerate}
@@ -74,7 +90,7 @@
 
 \begin{frame}
     \frametitle{Target Audience}
-    The web application is aimed at helping organizations take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.
+    The web application is aimed at helping \textcolor{blue}{organizations} take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.
 \end{frame}
 
 \begin{frame}
@@ -89,28 +105,29 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Challenges}
+    \begin{enumerate}
+        \item Mask Detection Accuracy
+            \begin{itemize}
+            \item Eyes and mouth Haar Cascades
+            \item Nose Haar Cascade
+            \end{itemize}
+        \item Database Integration
+        \item Email Notification 
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
     \frametitle{Learnings}
     \begin{enumerate}
         \item Pre-trained classifiers: Feature detection
         \item Working with Flask for web development
-        \begin{itemize}
-                % extensions
-            \item Database
-            \item Encrypted passwords
-        \end{itemize}
         \item Front-end
         \item Version control
     \end{enumerate}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Challenges}
-    \begin{enumerate}
-        \item Mask Detection Accuracy
-        \item Database Integration
-        \item Email Notification 
-    \end{enumerate}
-\end{frame}
 
 
 \begin{frame}
@@ -127,7 +144,7 @@
     \begin{enumerate}
         \item \href{https://opencv.org/}{OpenCV documentation} 
         \item \href{https://flask.palletsprojects.com/en/1.1.x/}{Flask documentation} 
-        \item \href{https://link.springer.com/article/10.1007/s00138-010-0250-7}{A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework}
+        \item \href{http://alereimondo.no-ip.org/OpenCV/uploads/37/CameraReadyPaper63.pdf}{A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework}
     \end{enumerate}
 \end{frame}
 
