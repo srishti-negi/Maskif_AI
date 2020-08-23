@@ -1,5 +1,6 @@
 \documentclass[14pt]{beamer}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \graphicspath{ {./images/} }
 
 \title{MaskifAI}
@@ -22,13 +23,14 @@
 
 \begin{frame}
     \frametitle{Where would you feel safer?}
+    \centering
     \includegraphics[width=4.5 cm,height=3.5 cm]{office_mask}
     \includegraphics[width=4.5 cm,height=3.5 cm]{no_office_mask}
 \end{frame}
 
 \begin{frame}
     \frametitle{Overview}
-    Our project aims to create a mask detection web application which can be used by organizations to ensure that everybody who enters the workspace wears a mask.
+    MaskifAI is a mask detection web app which can be used by an organization to ensure that their employees wear a mask while entering the workspace.
 \end{frame}
 
 \begin{frame}
@@ -52,8 +54,8 @@
         \item OpenCV
         \item Flask
         \item SQLite
-        \item HTML
-        \item CSS
+        \item HTML/CSS
+        \item Bootstrap
     \end{enumerate}
 \end{frame} 
 
@@ -72,7 +74,7 @@
 
 \begin{frame}
     \frametitle{Target Audience}
-    The web application is  aimed at helping organizations take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.
+    The web application is aimed at helping organizations take precautions against Covid-19 by ensuring that all the employees who enter the workspace wear masks.
 \end{frame}
 
 \begin{frame}
@@ -93,7 +95,6 @@
         \item Working with Flask for web development
         \begin{itemize}
                 % extensions
-            \item Login 
             \item Database
             \item Encrypted passwords
         \end{itemize}
@@ -124,17 +125,18 @@
 \begin{frame}
     \frametitle{References}
     \begin{enumerate}
-        \item OpenCV documentation: 
-        https://opencv.org/
-        \item Flask documentation: 
-        https://flask.palletsprojects.com/en/1.1.x/
-        \item A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework: 
-        https://link.springer.com/article/10.1007/s00138-010-0250-7
+        \item \href{https://opencv.org/}{OpenCV documentation} 
+        \item \href{https://flask.palletsprojects.com/en/1.1.x/}{Flask documentation} 
+        \item \href{https://link.springer.com/article/10.1007/s00138-010-0250-7}{A comparison of face and facial feature detectors based on the Viola-Jones general object detection framework}
     \end{enumerate}
 \end{frame}
 
 \begin{frame}[c]{ }
     \centering
 \huge \textbf{Demo}
+\end{frame}
+\begin{frame}[c]{ }
+    \centering
+\huge \textbf{Thank You!}
 \end{frame}
 \end{document}
