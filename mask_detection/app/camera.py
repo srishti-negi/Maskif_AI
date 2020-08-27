@@ -47,7 +47,12 @@ class VideoCamera(object):
             #frame the face
             frame = cv2.ellipse(frame, center, (w//2, h//2), 0, 0, 360, frame_color, 4)
             #add appropraiate label to frame
-            face_label = "Wearing mask: " + str(wearing_mask)
+            if wearing_mask:
+                face_label = "Great! You are a responsible citizen"
+            
+            else:
+                face_label = "Go wear a mask!!"
+                #face_label = "Don't risk your and others life.Go wear a mask!"
             frame = cv2.putText(frame, face_label, (x - w, y), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.2, (255, 0, 0) )
             break
         ret, jpeg = cv2.imencode(".jpg", frame)
