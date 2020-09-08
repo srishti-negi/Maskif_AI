@@ -1,4 +1,5 @@
 # MaskifAI
+MaskifAI is a mask detection web application, which helps organizations ensure that the employees entering the workspace wear a mask.
 
 ## Objective
 Use OpenCV and Flask to create a mask detection web app. 
